@@ -1,4 +1,5 @@
-﻿namespace Microsoft.Extensions.Logging
+﻿// ReSharper disable once CheckNamespace
+namespace Microsoft.Extensions.Logging
 {
     using System;
     using log4net;
@@ -27,7 +28,7 @@
         {
             this.log = LogManager.GetLogger(loggerRepository, name);
         }
-        
+
         /// <summary>
         /// Begins a logical operation scope.
         /// </summary>
@@ -49,22 +50,39 @@
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public bool IsEnabled(LogLevel logLevel)
         {
+            bool ret;
             switch (logLevel)
             {
                 case LogLevel.Critical:
-                    return log.IsFatalEnabled;
+                    ret = this.log.IsFatalEnabled;
+                    break;
+
                 case LogLevel.Debug:
                 case LogLevel.Trace:
-                    return log.IsDebugEnabled;
+                    ret = this.log.IsDebugEnabled;
+                    break;
+
                 case LogLevel.Error:
-                    return log.IsErrorEnabled;
+                    ret = this.log.IsErrorEnabled;
+                    break;
+
                 case LogLevel.Information:
-                    return log.IsInfoEnabled;
+                    ret = this.log.IsInfoEnabled;
+                    break;
+
                 case LogLevel.Warning:
-                    return log.IsWarnEnabled;
+                    ret = this.log.IsWarnEnabled;
+                    break;
+
+                case LogLevel.None:
+                    ret = false;
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(logLevel));
             }
+
+            return ret;
         }
 
         /// <summary>
@@ -84,51 +102,93 @@
             Exception exception,
             Func<TState, Exception, string> formatter)
         {
-            if (!this.IsEnabled(logLevel))
+            if (this.IsEnabled(logLevel))
             {
-                return;
-            }
-            
-            if (null == formatter)
-            {
-                throw new ArgumentNullException(nameof(formatter));
-            }
-            
-            string message = null;
-            if (null != formatter)
-            {
-                message = formatter(state, exception);
-            }
+                if (formatter == null)
+                {
+                    throw new ArgumentNullException(nameof(formatter));
+                }
 
-            if (null != exception && null != this.exceptionDetailsFormatter)
-            {
-                message = this.exceptionDetailsFormatter(message, exception);
-            }
+                string message = formatter(state, exception);
+                if (exception != null && this.exceptionDetailsFormatter != null)
+                {
+                    message = this.exceptionDetailsFormatter(message, exception);
+                }
 
-            if (!string.IsNullOrEmpty(message)
-                || exception != null)
-            {
+                if (message == null)
+                {
+                    message = "Sin mensaje.";
+                }
+
                 switch (logLevel)
                 {
                     case LogLevel.Critical:
-                        log.Fatal(message);
+                        if (exception != null)
+                        {
+                            this.log.Fatal(message, exception);
+                        }
+                        else
+                        {
+                            this.log.Fatal(message);
+                        }
+
                         break;
+
                     case LogLevel.Debug:
                     case LogLevel.Trace:
-                        log.Debug(message);
+                        if (exception != null)
+                        {
+                            this.log.Debug(message, exception);
+                        }
+                        else
+                        {
+                            this.log.Debug(message);
+                        }
+
                         break;
+
                     case LogLevel.Error:
-                        log.Error(message);
+                        if (exception != null)
+                        {
+                            this.log.Error(message, exception);
+                        }
+                        else
+                        {
+                            this.log.Error(message);
+                        }
+
                         break;
+
                     case LogLevel.Information:
-                        log.Info(message);
+                        if (exception != null)
+                        {
+                            this.log.Info(message, exception);
+                        }
+                        else
+                        {
+                            this.log.Info(message);
+                        }
+
                         break;
+
                     case LogLevel.Warning:
-                        log.Warn(message);
+                        if (exception != null)
+                        {
+                            this.log.Warn(message, exception);
+                        }
+                        else
+                        {
+                            this.log.Warn(message);
+                        }
+
                         break;
+
+                    case LogLevel.None:
+                        break;
+
                     default:
-                        log.Warn($"Encountered unknown log level {logLevel}, writing out as Info.");
-                        log.Info(message, exception);
+                        this.log.Warn($"Encountered unknown log level {logLevel}, writing out as Info.");
+                        this.log.Info(message, exception);
                         break;
                 }
             }
