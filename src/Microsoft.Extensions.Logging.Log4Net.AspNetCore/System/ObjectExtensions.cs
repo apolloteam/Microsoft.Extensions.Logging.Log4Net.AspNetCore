@@ -4,7 +4,7 @@ namespace System
     /// <summary>
     /// Extensiones para todas las instancias de los objetos.
     /// </summary>
-    public static class ObjectExtensions
+    internal static class ObjectExtensions
     {
         #region Methods
 

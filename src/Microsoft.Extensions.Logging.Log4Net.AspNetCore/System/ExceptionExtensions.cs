@@ -35,7 +35,7 @@ namespace System
         /// <summary>Devuelve la serialización de la excepción como Json.</summary>
         /// <param name="exception">Excepción a serializar.</param>
         /// <returns>Cadena Json.</returns>
-        public static string ToJson(this Exception exception)
+        internal static string ToJson(this Exception exception)
         {
             if (exception == null)
             {
@@ -225,7 +225,7 @@ namespace System
         /// </remarks>
         /// <param name="exception">La excepción sobre la cual se va a hacer el resumen.</param>
         /// <returns>Un objeto con datos resumidos de la excepción.</returns>
-        public static object ToResumeLog(this Exception exception)
+        internal static object ToResumeLog(this Exception exception)
         {
             object ret = null;
             if (exception != null)
