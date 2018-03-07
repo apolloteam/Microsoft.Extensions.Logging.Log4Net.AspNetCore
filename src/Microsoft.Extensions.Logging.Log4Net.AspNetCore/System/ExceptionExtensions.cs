@@ -104,7 +104,8 @@ namespace System
             string stacktrace;
             if (!string.IsNullOrWhiteSpace(exception.StackTrace))
             {
-                stacktrace = JsonConvert.SerializeObject(exception.StackTrace.Split(new[] { Environment.NewLine },
+                stacktrace = JsonConvert.SerializeObject(
+                    exception.StackTrace.Split(new[] { Environment.NewLine },
                     StringSplitOptions.RemoveEmptyEntries));
             }
             else

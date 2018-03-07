@@ -5,13 +5,13 @@ namespace Microsoft.Extensions.Logging
     using System.Collections.Concurrent;
     using System.IO;
     using System.Text;
-    using System.Xml;
     using System.Reflection;
+    using System.Xml;
 
     using log4net;
     using log4net.Config;
-    using log4net.Repository;
     using log4net.ObjectRenderer;
+    using log4net.Repository;
 
     /// <summary>
     /// The log4net provider class.
@@ -54,8 +54,7 @@ namespace Microsoft.Extensions.Logging
             Assembly assembly = Assembly.GetEntryAssembly();
             this.loggerRepository = LogManager.CreateRepository(assembly, type);
 
-            // XmlConfigurator.Configure(this.loggerRepository, Parselog4NetConfigFile(log4NetConfigFile));
-
+            //// XmlConfigurator.Configure(this.loggerRepository, Parselog4NetConfigFile(log4NetConfigFile));
             FileInfo configFile = new FileInfo(log4NetConfigFile);
             XmlConfigurator.Configure(this.loggerRepository, configFile);
 

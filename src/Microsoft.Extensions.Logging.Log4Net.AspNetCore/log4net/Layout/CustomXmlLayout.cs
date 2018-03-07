@@ -1,14 +1,13 @@
 ﻿// ReSharper disable once CheckNamespace
-
-using log4net.ObjectRenderer;
-
 namespace log4net.Layout
 {
     using System;
     using System.Collections;
     using System.Text;
     using System.Xml;
+
     using Core;
+    using log4net.ObjectRenderer;
     using Util;
 
     /// <summary>
@@ -16,17 +15,66 @@ namespace log4net.Layout
     /// </summary>
     public class CustomXmlLayout : XmlLayout
     {
+
+
+        #region Private Instance Fields
+
         /// <summary>
-        /// 
+        /// The prefix to use for all generated element names
+        /// </summary>
+        // private readonly string m_prefix = PREFIX;
+
+        private readonly string m_elmEvent = ELM_EVENT;
+        private readonly string m_elmMessage = ELM_MESSAGE;
+        private readonly string m_elmData = ELM_DATA;
+        private readonly string m_elmProperties = ELM_PROPERTIES;
+        private readonly string m_elmException = ELM_EXCEPTION;
+        private readonly string m_elmLocation = ELM_LOCATION;
+
+        // private readonly bool m_base64Message = false;
+        // private readonly bool m_base64Properties = false;
+
+        #endregion Private Instance Fields
+
+        #region Private Static Fields
+
+        // private const string PREFIX = "log4net";
+
+        private const string ELM_EVENT = "event";
+        private const string ELM_MESSAGE = "message";
+        private const string ELM_PROPERTIES = "properties";
+        // private const string ELM_GLOBAL_PROPERTIES = "global-properties";
+        private const string ELM_DATA = "data";
+        private const string ELM_EXCEPTION = "exception";
+        private const string ELM_LOCATION = "locationInfo";
+
+        private const string ATTR_LOGGER = "logger";
+        private const string ATTR_TIMESTAMP = "timestamp";
+        private const string ATTR_LEVEL = "level";
+        private const string ATTR_THREAD = "thread";
+        private const string ATTR_DOMAIN = "domain";
+        private const string ATTR_IDENTITY = "identity";
+        private const string ATTR_USERNAME = "username";
+        private const string ATTR_CLASS = "class";
+        private const string ATTR_METHOD = "method";
+        private const string ATTR_FILE = "file";
+        private const string ATTR_LINE = "line";
+        private const string ATTR_NAME = "name";
+        private const string ATTR_VALUE = "value";
+
+        #endregion Private Static Fields
+
+        /// <summary>
+        /// Constructor de la clase.
         /// </summary>
         public CustomXmlLayout()
         {
         }
 
         /// <summary>
-        /// 
+        /// Constructor de la clase.
         /// </summary>
-        /// <param name="locationInfo"></param>
+        /// <param name="locationInfo">Información de la ubicación donde se realiza el log.</param>
         public CustomXmlLayout(bool locationInfo)
             : base(locationInfo)
         {
@@ -153,53 +201,5 @@ namespace log4net.Layout
                 base.FormatXml(writer, loggingEvent);
             }
         }
-
-        #region Private Instance Fields
-
-        /// <summary>
-        /// The prefix to use for all generated element names
-        /// </summary>
-        // private readonly string m_prefix = PREFIX;
-
-        private readonly string m_elmEvent = ELM_EVENT;
-        private readonly string m_elmMessage = ELM_MESSAGE;
-        private readonly string m_elmData = ELM_DATA;
-        private readonly string m_elmProperties = ELM_PROPERTIES;
-        private readonly string m_elmException = ELM_EXCEPTION;
-        private readonly string m_elmLocation = ELM_LOCATION;
-
-        // private readonly bool m_base64Message = false;
-        // private readonly bool m_base64Properties = false;
-
-        #endregion Private Instance Fields
-
-        #region Private Static Fields
-
-        // private const string PREFIX = "log4net";
-
-        private const string ELM_EVENT = "event";
-        private const string ELM_MESSAGE = "message";
-        private const string ELM_PROPERTIES = "properties";
-        // private const string ELM_GLOBAL_PROPERTIES = "global-properties";
-        private const string ELM_DATA = "data";
-        private const string ELM_EXCEPTION = "exception";
-        private const string ELM_LOCATION = "locationInfo";
-
-        private const string ATTR_LOGGER = "logger";
-        private const string ATTR_TIMESTAMP = "timestamp";
-        private const string ATTR_LEVEL = "level";
-        private const string ATTR_THREAD = "thread";
-        private const string ATTR_DOMAIN = "domain";
-        private const string ATTR_IDENTITY = "identity";
-        private const string ATTR_USERNAME = "username";
-        private const string ATTR_CLASS = "class";
-        private const string ATTR_METHOD = "method";
-        private const string ATTR_FILE = "file";
-        private const string ATTR_LINE = "line";
-        private const string ATTR_NAME = "name";
-        private const string ATTR_VALUE = "value";
-
-
-        #endregion Private Static Fields
     }
 }

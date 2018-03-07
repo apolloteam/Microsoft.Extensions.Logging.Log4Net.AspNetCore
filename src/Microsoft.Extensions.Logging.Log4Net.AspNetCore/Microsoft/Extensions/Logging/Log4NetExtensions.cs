@@ -20,8 +20,9 @@ namespace Microsoft.Extensions.Logging
         /// <param name="log4NetConfigFile">The log4net Config File.</param>
         /// <param name="exceptionFormatter">Exception formatter.</param>
         /// <returns>The <see cref="ILoggerFactory"/>.</returns>
-        public static ILoggerFactory AddLog4Net(this ILoggerFactory factory, 
-            string log4NetConfigFile, 
+        public static ILoggerFactory AddLog4Net(
+            this ILoggerFactory factory,
+            string log4NetConfigFile,
             Func<object, Exception, string> exceptionFormatter)
         {
             if (factory == null)
