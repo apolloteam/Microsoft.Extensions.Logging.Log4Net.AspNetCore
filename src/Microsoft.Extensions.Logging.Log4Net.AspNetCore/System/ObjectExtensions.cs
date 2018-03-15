@@ -20,7 +20,7 @@ namespace System
         /// <param name="obj">Objeto a serializar.</param>
         /// <param name="settings">Configuración adicional opcional.</param>
         /// <returns>Un string con el objeto en formato JSON.</returns>
-        internal static string ToJson(this object obj, Newtonsoft.Json.JsonSerializerSettings settings)
+        public static string ToJson(this object obj, Newtonsoft.Json.JsonSerializerSettings settings)
         {
             if (settings == null)
             {

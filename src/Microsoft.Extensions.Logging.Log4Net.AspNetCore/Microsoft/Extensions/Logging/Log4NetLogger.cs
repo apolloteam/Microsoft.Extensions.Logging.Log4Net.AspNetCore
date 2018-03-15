@@ -47,7 +47,7 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="logLevel">The log level.</param>
         /// <returns>The <see cref="bool"/> value indicating whether the logging level is enabled.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">LogLevel no reconocido.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">El log level no pertenece al enum.</exception>
         public bool IsEnabled(LogLevel logLevel)
         {
             bool ret;

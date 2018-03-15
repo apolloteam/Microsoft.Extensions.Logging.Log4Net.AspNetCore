@@ -50,16 +50,16 @@ namespace System
             bool includeInnerException = true;
             if (aex != null)
             {
-                StringBuilder sbAEx = new StringBuilder();
-                sbAEx.Append("[");
+                StringBuilder builder = new StringBuilder();
+                builder.Append("[");
                 for (int i = 0, l = aex.InnerExceptions.Count; i < l; i++)
                 {
                     Exception aux = aex.InnerExceptions[i];
                     string value = ToJson(aux);
-                    sbAEx.Append(value);
+                    builder.Append(value);
                     if (i < l - 1)
                     {
-                        sbAEx.Append(",");
+                        builder.Append(",");
                     }
 
                     // Valida que la excepción InnerException no este en la lista de las exepciones.
@@ -69,8 +69,8 @@ namespace System
                     }
                 }
 
-                sbAEx.Append("]");
-                innerexceptions = sbAEx.ToString();
+                builder.Append("]");
+                innerexceptions = builder.ToString();
             }
             else
             {
@@ -105,8 +105,7 @@ namespace System
             if (!string.IsNullOrWhiteSpace(exception.StackTrace))
             {
                 stacktrace = JsonConvert.SerializeObject(
-                    exception.StackTrace.Split(new[] { Environment.NewLine },
-                    StringSplitOptions.RemoveEmptyEntries));
+                    exception.StackTrace.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
             }
             else
             {
